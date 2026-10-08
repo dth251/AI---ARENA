@@ -1,0 +1,28 @@
+# Environment & Secrets
+.env
+.env.local
+*.env
+
+# Python (ai-service)
+__pycache__/
+*.py[cod]
+*$py.class
+ai-service/.venv/
+.pytest_cache/
+
+# Java & Gradle (backend)
+backend/.gradle/
+backend/build/
+backend/.gradle-local/
+*.class
+*.jar
+*.war
+
+# Node & Frontend (frontend)
+frontend/node_modules/
+frontend/dist/
+*.tsbuildinfo
+
+# IDE & OS
+.DS_Store
+Thumbs.db

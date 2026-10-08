@@ -1,0 +1,13 @@
+import { useEffect, useRef, useState } from 'react';
+import { BookOpen, X, ArrowUpRight } from 'lucide-react';
+import { getCulturalKnowledge } from '../../services/culturalApi';
+import { errorMessage } from '../../services/api';
+import type { CulturalKnowledge } from '../../types';
+import { ErrorBox, Loading } from '../common/UI';
+export function CulturalContent({ knowledge }: { knowledge: CulturalKnowledge }) { return <div className="cultural-content">{[['Nguồn gốc',knowledge.origin],['Ý nghĩa văn hóa',knowledge.meaning],['Đặc trưng',knowledge.characteristics]].map(([title,text])=><section key={title}><h3>{title}</h3><p>{text}</p></section>)}{knowledge.sources?.length? <section><h3>Nguồn tham khảo</h3>{knowledge.sources.filter(source=>/^https?:\/\//i.test(source.url)).map(source=><a className="source-link" key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.title}<ArrowUpRight size={14}/></a>)}</section>:<p className="muted">Backend chưa cung cấp liên kết nguồn tham khảo.</p>}</div>; }
+export default function CulturalInfoModal({ code, onClose, onSelect }: { code: string; onClose: ()=>void; onSelect: ()=>void }) {
+  const dialog = useRef<HTMLDialogElement>(null); const [data,setData]=useState<CulturalKnowledge>();const [error,setError]=useState('');const [retry,setRetry]=useState(0);
+  useEffect(()=>{const element=dialog.current; const previous=document.activeElement as HTMLElement; element?.showModal();const overflow=document.body.style.overflow;document.body.style.overflow='hidden';return()=>{element?.close();document.body.style.overflow=overflow;previous?.focus();};},[]);
+  useEffect(()=>{const controller=new AbortController();setData(undefined);setError('');getCulturalKnowledge(code,controller.signal).then(result=>{if(!controller.signal.aborted)setData(result);}).catch(err=>{if(!controller.signal.aborted)setError(errorMessage(err));});return()=>controller.abort();},[code,retry]);
+  return <dialog ref={dialog} className="culture-modal" aria-labelledby="culture-title" onCancel={onClose} onClick={e=>{if(e.target===dialog.current)onClose();}}><div className="modal-inner"><button className="icon-button modal-close" onClick={onClose} aria-label="Đóng thông tin văn hóa"><X/></button><span className="eyebrow"><BookOpen size={17}/> CÂU CHUYỆN VIỆT PHỤC</span><h2 id="culture-title">{data?.name||'Tìm hiểu trang phục'}</h2>{error?<ErrorBox message={error} retry={()=>setRetry(v=>v+1)}/>:data?<CulturalContent knowledge={data}/>:<Loading/>}<button className="button primary full-width" onClick={onSelect}>Chọn trang phục này</button></div></dialog>;
+}
