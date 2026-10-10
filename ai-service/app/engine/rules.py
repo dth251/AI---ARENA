@@ -75,6 +75,13 @@ def matches(cond: dict, o: OutfitState, ctx: Intent | None = None, metrics: dict
     return _matches(cond, o, ctx, metrics or {}) is True
 
 
+def _suggestion(rule: dict, gender: str) -> Suggestion:
+    suggestion = rule["suggestion"]
+    data = {key: value for key, value in suggestion.items() if key != "byGender"}
+    data.update(suggestion.get("byGender", {}).get(gender, {}))
+    return Suggestion(**data)
+
+
 def evaluate(o: OutfitState, rules: list[dict], ctx: Intent | None = None, metrics: dict | None = None) -> list[Evaluation]:
     hits = [r for r in rules if r.get("active", True) and matches(r["when"], o, ctx, metrics)]
     # One issue contributes once, even when a general rule and a specific rule both match.
@@ -88,7 +95,7 @@ def evaluate(o: OutfitState, rules: list[dict], ctx: Intent | None = None, metri
     hits = [value[1] for value in groups.values()]
     evals = [
         Evaluation(id=r["id"], level=r["level"], reason=r["reason"],
-                   suggestion=Suggestion(**r["suggestion"]), sources=r.get("sources", []),
+                   suggestion=_suggestion(r, o.gender), sources=r.get("sources", []),
                    sourceVerified=bool(r.get("verified", False)), sourceNote=r.get("sourceNote", ""))
         for r in hits
     ]

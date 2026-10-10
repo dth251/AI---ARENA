@@ -246,6 +246,7 @@ Tác động luật đặc trưng áo được nhân 0,4 trong công thức `0,6
 - Điều kiện: `{"all":[{"garment":["ao_dai","ao_ngu_than","ao_tu_than","nhat_binh","ao_ba_ba"]},{"shoes":["dep"]},{"occasion":["tet","ky_yeu","dam_cuoi","le_hoi_chua"]}]}`.
 - Nhận xét: Dép lê / dép Crocs quá xuề xoà cho dịp trang trọng khi mặc áo truyền thống
 - Gợi ý: Đổi sang hài thêu, giày búp bê hoặc guốc
+- Gợi ý cho nam: Đổi sang giày da đen hoặc giày ta để giữ bản phối nam chỉn chu trong dịp trang trọng.
 - Nguồn: Quy tắc của ứng dụng. Quy ước phối đồ của ứng dụng (tổng hợp từ cách mặc phổ biến), chưa phải quy định văn hoá bắt buộc.
 
 ### R46 — Dép lê / dép Crocs làm bộ áo truyền thống trông xuề xoà, mất sự chỉn chu
@@ -254,6 +255,7 @@ Tác động luật đặc trưng áo được nhân 0,4 trong công thức `0,6
 - Điều kiện: `{"all":[{"garment":["ao_dai","ao_ngu_than","ao_tu_than","nhat_binh","ao_ba_ba"]},{"shoes":["dep"]},{"occasion":["dao_pho"]}]}`.
 - Nhận xét: Dép lê / dép Crocs làm bộ áo truyền thống trông xuề xoà, mất sự chỉn chu
 - Gợi ý: Đổi sang giày búp bê hoặc sneaker trắng trơn
+- Gợi ý cho nam: Đổi sang giày da đen hoặc giày ta; nếu phối theo hướng cách tân khi dạo phố, có thể chọn sneaker trắng trơn.
 - Nguồn: Quy tắc của ứng dụng. Quy ước phối đồ của ứng dụng (tổng hợp từ cách mặc phổ biến), chưa phải quy định văn hoá bắt buộc.
 
 ### R47 — Giày thể thao chưa hợp dịp trang trọng như cưới hỏi, đi chùa
@@ -262,6 +264,7 @@ Tác động luật đặc trưng áo được nhân 0,4 trong công thức `0,6
 - Điều kiện: `{"all":[{"garment":["ao_dai","ao_ngu_than","ao_tu_than","nhat_binh","ao_ba_ba"]},{"shoes":["giay_the_thao"]},{"occasion":["dam_cuoi","le_hoi_chua"]}]}`.
 - Nhận xét: Giày thể thao chưa hợp dịp trang trọng như cưới hỏi, đi chùa
 - Gợi ý: Đổi sang hài thêu, giày búp bê hoặc giày da
+- Gợi ý cho nam: Đổi sang giày da đen hoặc giày ta cho dịp cưới hỏi, đi chùa.
 - Nguồn: Quy tắc của ứng dụng. Quy ước phối đồ của ứng dụng (tổng hợp từ cách mặc phổ biến), chưa phải quy định văn hoá bắt buộc.
 
 ### R48 — Đi chân trần chưa phù hợp dịp trang trọng
@@ -270,6 +273,7 @@ Tác động luật đặc trưng áo được nhân 0,4 trong công thức `0,6
 - Điều kiện: `{"all":[{"garment":["ao_dai","ao_ngu_than","ao_tu_than","nhat_binh","ao_ba_ba"]},{"shoes":["khong"]},{"occasion":["dam_cuoi","le_hoi_chua"]}]}`.
 - Nhận xét: Đi chân trần chưa phù hợp dịp trang trọng
 - Gợi ý: Thêm hài thêu hoặc giày búp bê
+- Gợi ý cho nam: Thêm giày da đen hoặc giày ta để hoàn thiện bản phối nam trong dịp trang trọng.
 - Nguồn: Quy tắc của ứng dụng. Quy ước phối đồ của ứng dụng (tổng hợp từ cách mặc phổ biến), chưa phải quy định văn hoá bắt buộc.
 
 ### R49 — Phụ kiện đường phố (mũ lưỡi trai / cao bồi, tai nghe, ba lô, găng tay, dây xích) lệch tinh thần dịp trang trọng
@@ -342,6 +346,7 @@ Tác động luật đặc trưng áo được nhân 0,4 trong công thức `0,6
 - Điều kiện: `{"all":[{"occasion":["tet","ky_yeu"]},{"shoes":["khong"]}]}`.
 - Nhận xét: Bản phối cho Tết hoặc kỷ yếu chưa có giày dép; phần đánh giá mới phản ánh lựa chọn trên màn hình.
 - Gợi ý: Chọn giày bệt, hài hoặc giày kín phù hợp hoạt động thực tế.
+- Gợi ý cho nam: Chọn giày da đen hoặc giày ta phù hợp hoạt động thực tế trong dịp Tết, kỷ yếu.
 - Nguồn: Quy tắc của ứng dụng. Quy tắc phối đồ của ứng dụng, dựa trên các món đã chọn và bối cảnh đã cung cấp; không phải quy định văn hóa bắt buộc.
 
 ### R58 — Nón lá trong không gian trong nhà

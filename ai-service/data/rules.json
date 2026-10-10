@@ -1046,7 +1046,10 @@
     },
     "reason": "Dép lê / dép Crocs quá xuề xoà cho dịp trang trọng khi mặc áo truyền thống",
     "suggestion": {
-      "text": "Đổi sang hài thêu, giày búp bê hoặc guốc"
+      "text": "Đổi sang hài thêu, giày búp bê hoặc guốc",
+      "byGender": {
+        "nam": {"text": "Đổi sang giày da đen hoặc giày ta để giữ bản phối nam chỉn chu trong dịp trang trọng."}
+      }
     },
     "sources": [],
     "verified": false,
@@ -1086,7 +1089,10 @@
     },
     "reason": "Dép lê / dép Crocs làm bộ áo truyền thống trông xuề xoà, mất sự chỉn chu",
     "suggestion": {
-      "text": "Đổi sang giày búp bê hoặc sneaker trắng trơn"
+      "text": "Đổi sang giày búp bê hoặc sneaker trắng trơn",
+      "byGender": {
+        "nam": {"text": "Đổi sang giày da đen hoặc giày ta; nếu phối theo hướng cách tân khi dạo phố, có thể chọn sneaker trắng trơn."}
+      }
     },
     "sources": [],
     "verified": false,
@@ -1127,7 +1133,10 @@
     },
     "reason": "Giày thể thao chưa hợp dịp trang trọng như cưới hỏi, đi chùa",
     "suggestion": {
-      "text": "Đổi sang hài thêu, giày búp bê hoặc giày da"
+      "text": "Đổi sang hài thêu, giày búp bê hoặc giày da",
+      "byGender": {
+        "nam": {"text": "Đổi sang giày da đen hoặc giày ta cho dịp cưới hỏi, đi chùa."}
+      }
     },
     "sources": [],
     "verified": false,
@@ -1168,7 +1177,10 @@
     },
     "reason": "Đi chân trần chưa phù hợp dịp trang trọng",
     "suggestion": {
-      "text": "Thêm hài thêu hoặc giày búp bê"
+      "text": "Thêm hài thêu hoặc giày búp bê",
+      "byGender": {
+        "nam": {"text": "Thêm giày da đen hoặc giày ta để hoàn thiện bản phối nam trong dịp trang trọng."}
+      }
     },
     "sources": [],
     "verified": false,
@@ -1516,7 +1528,10 @@
     },
     "reason": "Bản phối cho Tết hoặc kỷ yếu chưa có giày dép; phần đánh giá mới phản ánh lựa chọn trên màn hình.",
     "suggestion": {
-      "text": "Chọn giày bệt, hài hoặc giày kín phù hợp hoạt động thực tế."
+      "text": "Chọn giày bệt, hài hoặc giày kín phù hợp hoạt động thực tế.",
+      "byGender": {
+        "nam": {"text": "Chọn giày da đen hoặc giày ta phù hợp hoạt động thực tế trong dịp Tết, kỷ yếu."}
+      }
     },
     "sources": [],
     "verified": false,

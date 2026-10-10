@@ -60,6 +60,25 @@ class DataCatalogIntegrationTest {
         assertTrue(select.contains("3 KIỂU ÁO KHÁC NHAU"));
         assertTrue(review.contains("KHÔNG khen vòng vo"));
     }
+    @Test void maleFootwearAdviceIsSyncedWithRulesDocument() throws Exception {
+        var rules=new com.fasterxml.jackson.databind.ObjectMapper().readTree(
+            mvc.perform(get("/api/data/documents/ai.rules")).andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8));
+        var ids=List.of("R45","R46","R47","R48","R57");
+        int checked=0;
+        for(var rule:rules) {
+            if(!ids.contains(rule.path("id").asText())) continue;
+            var stored=parseStoredJson(jdbc.queryForObject(
+                "SELECT metadata::text FROM ai_cultural_rules WHERE rule_key=?",String.class,rule.path("id").asText()));
+            assertEquals(rule,stored);
+            String maleAdvice=rule.path("suggestion").path("byGender").path("nam").path("text").asText();
+            assertTrue(maleAdvice.contains("giày da đen"));
+            assertTrue(maleAdvice.contains("giày ta"));
+            assertFalse(maleAdvice.contains("búp bê"));
+            checked++;
+        }
+        assertEquals(ids.size(),checked);
+    }
     private com.fasterxml.jackson.databind.JsonNode parseStoredJson(String raw) throws Exception {
         var mapper=new com.fasterxml.jackson.databind.ObjectMapper();
         var value=mapper.readTree(raw);

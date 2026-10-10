@@ -115,6 +115,9 @@ Bộ luật (`data/rules.json`, tổng 80 luật) xét **từng món** của t�
   Quần suông/rộng/dài có luật cộng điểm theo loại áo; váy dài được xét riêng cho tứ thân, Nhật Bình và biến thể cách tân áo dài/ngũ thân.
 - **Giày dép** (`shoes`): dép lê / dép Crocs với áo truyền thống ở dịp trang trọng (Tết, kỷ yếu, cưới hỏi, lễ chùa) là luật nặng
   (trần 45), ở dịp dạo phố chỉ bị trừ; giày thể thao hoặc đi chân trần ở cưới hỏi, đi chùa bị trừ.
+  Các luật R45–R48 và R57 chọn gợi ý theo giới tính qua `suggestion.byGender`: nam được gợi ý giày da đen hoặc giày ta,
+  và sneaker trắng trơn cho hướng cách tân khi dạo phố. Gợi ý này dùng chung cho chấm nhanh, stylist và Remix.
+  Khi đọc catalog từ PostgreSQL, chạy backend để Flyway áp dụng V19 rồi khởi động lại AI để nạp dữ liệu mới.
 - **Phụ kiện đường phố** (mũ lưỡi trai / cao bồi, tai nghe, ba lô, găng tay, dây xích) ở dịp trang trọng bị trừ; yếu tố hiện đại
   được tính tới 4 món trong tiêu chí "Cách tân".
 - Bộ nào có luật nặng thì tổng điểm bị chặn ở mức thấp (dưới 60, xếp loại "Cần chỉnh") và nhận xét của stylist nói thẳng là chưa phù hợp.
