@@ -7,8 +7,12 @@ import {fittedShirtMesh,fitBodyPoint} from '../src/utils/renderMaleCharacter.ts'
 test('wardrobes contain gender-appropriate garment families and separate asset roots',()=>{
  for(const gender of ['male','female']){
   const c=getWardrobe(gender);
-  for(const id of ['ngu-than','ba-ba',...(gender==='female'?['tu-than','nhat-binh']:[])])assert.ok(c.outfits.some(x=>x.id===id));
-  if(gender==='male')assert.ok(!c.outfits.some(x=>['tu-than','nhat-binh'].includes(x.id)));
+  for(const id of ['ngu-than','ba-ba','tu-than','nhat-binh'])assert.ok(c.outfits.some(x=>x.id===id));
+  assert.equal(c.outfits.filter(x=>['navy','jade','burgundy','teal','rose'].includes(x.id)).length,1);
+  assert.equal(c.outfits.find(x=>['navy','jade'].includes(x.id)).name,'Áo dài');
+  const hat=c.accessories.find(x=>x.id==='mu-nhat-binh');assert.ok(hat);
+  assert.equal(hat.slot,'headwear');assert.equal(hat.gender,'unisex');
+  for(const view of ['front','left','right','back'])assert.ok(existsSync(new URL('../public/figure/'+gender+'-layers/'+hat.file.replace('front.png',view+'.png'),import.meta.url)));
   assert.ok(c.outfits.some(x=>['navy','jade'].includes(x.id)));
   for(const file of [c.base,...c.outfits.map(x=>x.file),...c.pants.map(x=>x.file),...c.shoes.map(x=>x.file)])
    assert.ok(existsSync(new URL('../public/figure/'+gender+'-layers/'+file,import.meta.url)),file);
@@ -35,11 +39,23 @@ test('shirt, pants and footwear are independent; bases are barefoot',()=>{
 
 test('saved older outfits migrate and invalid values recover without shoes',()=>{
  assert.deepEqual(readMaleSelection('base'),{shirt:null,pants:null,shoes:null});
- assert.deepEqual(readMaleSelection('teal'),{shirt:'teal',pants:'ivory',shoes:null});
- assert.deepEqual(readMaleSelection('{"shirt":"burgundy","pants":null}'),{shirt:'burgundy',pants:null,shoes:null});
+ assert.deepEqual(readMaleSelection('teal'),{shirt:'navy',pants:'ivory',shoes:null,styles:{shirt:{color:'#397c78'}}});
+ assert.deepEqual(readMaleSelection('{"shirt":"burgundy","pants":null}'),{shirt:'navy',pants:null,shoes:null,styles:{shirt:{color:'#8b2635'}}});
  for(const raw of [null,'invalid-json','42','{}'])
   assert.deepEqual(readMaleSelection(raw),{shirt:'navy',pants:'ivory',shoes:null});
  assert.deepEqual(readMaleSelection('{"shirt":null,"pants":null,"shoes":"bad"}','female'),{shirt:null,pants:null,shoes:null});
+});
+
+test('retired ao dai colours migrate without losing custom colours or patterns',()=>{
+ const raw={shirt:'rose',pants:'ivory',styles:{shirt:{color:'#765a94',pattern:'cham-bi'}}};
+ const before=structuredClone(raw);
+ const custom=normalizeMaleSelection(raw,'female');
+ assert.equal(custom.shirt,'jade');assert.deepEqual(custom.styles,raw.styles);assert.deepEqual(raw,before);
+ assert.equal(readMaleSelection('rose','female').styles.shirt.color,'#de91aa');
+ for(const character of ['male','female']){
+  const value=normalizeMaleSelection({shirt:'nhat-binh',accessories:{headwear:'mu-nhat-binh'}},character);
+  assert.equal(value.shirt,'nhat-binh');assert.equal(value.accessories.headwear,'mu-nhat-binh');
+ }
 });
 
 test('every fitted garment keeps a finite mesh without inverted triangles',()=>{

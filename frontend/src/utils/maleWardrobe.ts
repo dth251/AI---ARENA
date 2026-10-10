@@ -32,7 +32,7 @@ export interface WardrobeCatalog {
 }
 function genderWardrobe(catalog:WardrobeCatalog,character:WardrobeCharacter):WardrobeCatalog {
  const allowed=(item:WardrobeItem)=>!item.gender || item.gender==='unisex' || item.gender===character;
- return {...catalog,outfits:catalog.outfits.filter(allowed),pants:catalog.pants.filter(allowed),
+ return {...catalog,outfits:catalog.outfits.filter(item=>allowed(item)&&!['burgundy','teal','rose'].includes(item.id)),pants:catalog.pants.filter(allowed),
   shoes:catalog.shoes.filter(allowed),accessories:catalog.accessories.filter(allowed)};
 }
 const wardrobes:Record<WardrobeCharacter,WardrobeCatalog> = {
@@ -58,6 +58,7 @@ export const selectionKey = (character: WardrobeCharacter) => 'viet-fit-'+charac
 export const getWardrobe = (character: WardrobeCharacter) => wardrobes[character];
 export function normalizeCharacter(value: unknown): WardrobeCharacter { return value === 'female' ? 'female' : 'male'; }
 export interface MaleSelection { shirt: string | null; pants: string | null; shoes?: string | null; accessories?:Partial<Record<AccessorySlot,string|null>>; styles?:Partial<Record<GarmentStyleSlot,GarmentStyle>> }
+const retiredAoDaiColors:Record<string,string>={burgundy:'#8b2635',teal:'#397c78',rose:'#de91aa'};
 export function selectedAccessories(selection:MaleSelection,character:WardrobeCharacter) {
  return getWardrobe(character).accessories.filter(item=>item.slot && selection.accessories?.[item.slot]===item.id);
 }
@@ -69,7 +70,7 @@ export function selectedWardrobeItems(selection:MaleSelection,character:Wardrobe
 export function normalizeMaleSelection(value: unknown, character: WardrobeCharacter = 'male'): MaleSelection {
  const catalog=getWardrobe(character);
  if(value==='base')return {shirt:null,pants:null,shoes:null};
- if(typeof value==='string' && catalog.outfits.some(x=>x.id===value))value={shirt:value,pants:catalog.pants[0].id};
+ if(typeof value==='string' && (catalog.outfits.some(x=>x.id===value)||Object.hasOwn(retiredAoDaiColors,value)))value={shirt:value,pants:catalog.pants[0].id};
  const saved=value && typeof value==='object' && !Array.isArray(value)?value as MaleSelection:undefined;
  const normalized:MaleSelection = {shirt:saved?.shirt===null?null:catalog.outfits.find(x=>x.id===saved?.shirt)?.id??catalog.outfits[0].id,
  pants:saved?.pants===null?null:catalog.pants.find(x=>x.id===saved?.pants)?.id??catalog.pants[0].id,
@@ -82,6 +83,9 @@ export function normalizeMaleSelection(value: unknown, character: WardrobeCharac
   }
  }
  if(saved?.styles) normalized.styles=normalizeGarmentStyles(saved.styles);
+ if(saved?.shirt && Object.hasOwn(retiredAoDaiColors,saved.shirt) && !normalized.styles?.shirt?.color) {
+  normalized.styles={...normalized.styles,shirt:{...normalized.styles?.shirt,color:retiredAoDaiColors[saved.shirt]}};
+ }
  return normalized;
 }
 export function readMaleSelection(raw:string|null,character:WardrobeCharacter='male') {

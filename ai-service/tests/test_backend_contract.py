@@ -107,7 +107,7 @@ def test_shortcut_context_replaces_defaults_and_changes_selection(backend_client
     assert analysis['context']['weather'] == 'lanh' and analysis['context']['setting'] == 'ngoai_troi'
     assert 'kỷ yếu' in analysis['understanding'].lower() and 'ngoài trời' in analysis['understanding'].lower()
     assert 'màu tránh: Đỏ' in analysis['understanding']
-    assert all(c['outfitCode'] not in ('NHAT_BINH', 'AO_TU_THAN') and c['colorCode'] != 'RED'
+    assert all(c['outfitCode'] != 'NHAT_BINH' and c['colorCode'] != 'RED'
                and c['styleCode'] == 'MINIMAL' for c in data['concepts'])
 
 
@@ -189,7 +189,7 @@ def test_explicit_male_character_overrides_ambiguous_quiz_labels(backend_client,
     payload.update(character='male', prompt='Người mặc là nam hay nữ? Nam')
     response = backend_client.post('/ai/recommendations', json=payload)
     assert response.status_code == 200, response.text
-    assert all(c['outfitCode'] not in ('NHAT_BINH', 'AO_TU_THAN') for c in response.json()['concepts'])
+    assert response.json()['analysis']['character'] == 'male'
 
 
 def wardrobe_payload():

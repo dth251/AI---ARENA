@@ -35,6 +35,41 @@ def test_accessories_have_4_views(catalog):
                 assert_views(root, items[name])
 
 
+def test_shared_garments_and_nhat_binh_headwrap_support_quick_score_and_review(client):
+    for character in ('male', 'female'):
+        for shirt in ('nhat-binh', 'tu-than'):
+            body = dict(outfitCode='NHAT_BINH' if shirt == 'nhat-binh' else 'AO_TU_THAN',
+                        colorCode='RED', styleCode='TRADITIONAL', eventCode='TET', accessories=[],
+                        wardrobe={'character': character, 'selection': {
+                            'shirt': shirt, 'pants': 'ivory', 'shoes': 'hai-theu',
+                            'accessories': {'headwear': 'mu-nhat-binh'}}})
+            quick = client.post('/ai/wardrobe-score', json=body)
+            review = client.post('/ai/wardrobe-review', json=body)
+            assert quick.status_code == review.status_code == 200, review.text
+            current = review.json()['current']
+            assert current['state']['gender'] == ('nam' if character == 'male' else 'nu')
+            assert 'mu_nhat_binh' in current['state']['accessories']
+            assert quick.json()['score'] == current['scoreCard']['total']
+
+
+def test_nhat_binh_headwrap_is_understood_by_name(catalog):
+    for text in ('Mình muốn đội mũ Nhật Bình', 'Mình muốn đội mấn Nhật Bình'):
+        assert 'mu_nhat_binh' in parse_by_keywords(text, catalog).mustHave
+
+
+def test_remix_can_select_nhat_binh_headwrap_by_display_name():
+    from app.api.routers.wardrobe_remix import WardrobeOptions, _keyword_intent
+    from app.api.routers.wardrobe_score import WardrobeSelection
+
+    for gender in ('nam', 'nu'):
+        _, data = wardrobe(gender)
+        options = WardrobeOptions(**{key: data[key] for key in ('outfits', 'pants', 'shoes', 'accessories')})
+        current = WardrobeSelection(shirt='nhat-binh', pants='ivory', accessories={})
+        changed = _keyword_intent('Đội mũ Nhật Bình', options, current)
+        assert changed.accessories['headwear'] == 'mu-nhat-binh'
+        assert changed.shirt == current.shirt
+
+
 def test_garments_have_4_views(catalog):
     ids = {"ao_tu_than": "tu-than", "ao_ngu_than": "ngu-than", "nhat_binh": "nhat-binh", "ao_ba_ba": "ba-ba"}
     for garment in catalog.wearable_garments.values():

@@ -2,6 +2,7 @@
   {"id": "non_la", "name": "Nón lá", "slot": "head", "genders": ["nu", "nam"], "byGender": true, "usesAccent": true},
   {"id": "non_quai_thao", "name": "Nón quai thao", "slot": "head", "genders": ["nu"], "usesAccent": true},
   {"id": "khan_van", "name": "Khăn vấn", "slot": "hair", "genders": ["nu", "nam"], "byGender": true, "usesAccent": true},
+  {"id": "mu_nhat_binh", "name": "Mũ Nhật Bình", "slot": "hair", "genders": ["nu", "nam"], "byGender": true, "usesAccent": true},
   {"id": "khan_mo_qua", "name": "Khăn mỏ quạ", "slot": "hair", "genders": ["nu"], "usesAccent": false},
   {"id": "khan_xep", "name": "Khăn xếp", "slot": "hair", "genders": ["nam"], "usesAccent": true},
   {"id": "hoa_cai_toc", "name": "Hoa cài tóc", "slot": "hair", "genders": ["nu"], "usesAccent": true},

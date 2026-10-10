@@ -77,7 +77,7 @@ export function accessoryTarget(item: WardrobeItem, anchors: AccessoryAnchors, v
       } else if (item.id === 'khan-mo-qua') {
         width = head.width * (profile ? 1.25 : 1.34);
         height = head.height * (view === 'front' ? 1.62 : 1.26); y = head.y - head.height * .02;
-      } else if (item.id === 'khan-van') {
+      } else if (item.id === 'khan-van' || item.id === 'mu-nhat-binh') {
         width = head.width * 1.06; height = head.height * .26; y = head.y + head.height * .02;
       }
       return box(cx - width / 2, y, width, height);

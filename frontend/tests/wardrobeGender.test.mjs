@@ -8,7 +8,7 @@ import {configureWardrobe} from '../src/utils/mixWardrobe.ts';
 test('gender-specific items follow the AI catalog while modern shared items remain in both wardrobes',()=>{
   const ids=(character,category)=>getWardrobe(character)[category].map(item=>item.id);
   for(const id of ['tu-than','nhat-binh']){
-    assert.ok(!ids('male','outfits').includes(id));
+    assert.ok(ids('male','outfits').includes(id));
     assert.ok(ids('female','outfits').includes(id));
   }
   for(const id of ['non-quai-thao','khan-mo-qua','hoa-cai-toc','kieng-bac','bong-tai','vong-tay']){
@@ -31,13 +31,13 @@ test('changing gender removes incompatible saved items and keeps shared accessor
     styles:{shirt:{color:'#765a94',pattern:'cham-bi'}}};
   const before=structuredClone(raw);
   const value=normalizeMaleSelection(raw,'male');
-  assert.equal(value.shirt,'navy');assert.equal(value.pants,'ivory');assert.equal(value.shoes,null);
+  assert.equal(value.shirt,'nhat-binh');assert.equal(value.pants,'ivory');assert.equal(value.shoes,null);
   assert.equal(value.accessories.headwear,null);assert.equal(value.accessories.earrings,null);
   assert.equal(value.accessories.glasses,'kinh-ram');assert.equal(value.accessories.bag,'tui-tote');
   assert.deepEqual(value.styles,raw.styles);assert.deepEqual(raw,before);
   const config={conceptId:'old',outfitCode:'NHAT_BINH',colorCode:'PURPLE',styleCode:'MINIMAL',eventCode:'TET',accessoryCodes:['NON_QUAI_THAO']};
   const normalized=configureWardrobe(config,raw,'male',[{code:'AO_DAI',colors:[{code:'PURPLE',hex:'#765a94'}],accessories:[]}]);
-  assert.equal(normalized.outfitCode,'AO_DAI');assert.deepEqual(normalized.accessoryCodes,[]);
+  assert.equal(normalized.outfitCode,'NHAT_BINH');assert.deepEqual(normalized.accessoryCodes,[]);
   assert.equal(normalizeMaleSelection({accessories:{headwear:'khan-xep'}},'female').accessories.headwear,null);
 });
 
@@ -47,7 +47,7 @@ test('database catalog refresh applies gender filtering without mutating its sou
   try{
     setWardrobeCatalogs(catalogs);
     assert.equal(getWardrobe('male').outfits.length,5);
-    assert.equal(getWardrobe('female').accessories.length,21);
+    assert.equal(getWardrobe('female').accessories.length,22);
     assert.deepEqual(catalogs,before);
   }finally{setWardrobeCatalogs({male,female});}
 });

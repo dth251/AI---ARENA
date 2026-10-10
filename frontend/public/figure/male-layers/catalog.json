@@ -267,7 +267,7 @@
   "outfits": [
     {
       "id": "navy",
-      "name": "Áo dài xanh navy",
+      "name": "Áo dài",
       "detail": "Lụa · Rồng vàng",
       "file": "shirts/navy/front.png",
       "x": 0,
@@ -277,34 +277,6 @@
       "thumbnail": "shirts/navy/thumbnail.png",
       "category": "shirts",
       "reference": "assets/wardrobe/male/shirts/navy/source/reference.png",
-      "gender": "unisex"
-    },
-    {
-      "id": "burgundy",
-      "name": "Áo dài đỏ",
-      "detail": "Lụa · Rồng vàng",
-      "file": "shirts/burgundy/front.png",
-      "x": 0,
-      "y": 190,
-      "sx": 0.77,
-      "sy": 0.68,
-      "thumbnail": "shirts/burgundy/thumbnail.png",
-      "category": "shirts",
-      "reference": "assets/wardrobe/male/shirts/burgundy/source/reference.png",
-      "gender": "unisex"
-    },
-    {
-      "id": "teal",
-      "name": "Áo dài xanh ngọc",
-      "detail": "Lụa · Sen vàng",
-      "file": "shirts/teal/front.png",
-      "x": 0,
-      "y": 160,
-      "sx": 0.8,
-      "sy": 0.72,
-      "thumbnail": "shirts/teal/thumbnail.png",
-      "category": "shirts",
-      "reference": "assets/wardrobe/male/shirts/teal/source/reference.png",
       "gender": "unisex"
     },
     {
@@ -854,7 +826,7 @@
       "thumbnail": "shirts/tu-than/thumbnail.png",
       "category": "shirts",
       "reference": "assets/wardrobe/male/shirts/tu-than/source/reference.png",
-      "gender": "female"
+      "gender": "unisex"
     },
     {
       "id": "ngu-than",
@@ -1952,7 +1924,7 @@
       "thumbnail": "shirts/nhat-binh/thumbnail.png",
       "category": "shirts",
       "reference": "assets/wardrobe/male/shirts/nhat-binh/source/reference.png",
-      "gender": "female"
+      "gender": "unisex"
     },
     {
       "id": "ba-ba",
@@ -2545,6 +2517,24 @@
       "id": "khan-van",
       "name": "Khăn vấn",
       "detail": "Khăn lụa vấn vòng màu đỏ",
+      "category": "headwear",
+      "file": "headwear/khan-van/front.png",
+      "thumbnail": "headwear/khan-van/thumbnail.png",
+      "reference": "assets/wardrobe/male/headwear/khan-van/source/reference.png",
+      "sourcePrepared": true,
+      "x": 0,
+      "y": 0,
+      "sx": 1,
+      "sy": 1,
+      "slot": "headwear",
+      "offsetY": -200,
+      "rearViews": [],
+      "gender": "unisex"
+    },
+    {
+      "id": "mu-nhat-binh",
+      "name": "Mũ Nhật Bình",
+      "detail": "Mấn đỏ nhiều lớp, phối cùng Nhật Bình",
       "category": "headwear",
       "file": "headwear/khan-van/front.png",
       "thumbnail": "headwear/khan-van/thumbnail.png",

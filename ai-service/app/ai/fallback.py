@@ -46,6 +46,7 @@ COLOR_SHORT = [
 COLOR_CONTEXT = r"(mau|tong|ao|quan|khan|vay|sac|gam)"
 
 ACCESSORY_KEYWORDS = [
+    ("mu_nhat_binh", ["mu nhat binh", "man nhat binh"]),
     ("non_quai_thao", ["non quai thao", "quai thao", "non ba tam"]), ("non_la", ["non la"]),
     ("khan_mo_qua", ["khan mo qua", "mo qua"]), ("khan_xep", ["khan xep", "khan dong"]),
     ("hoa_cai_toc", ["hoa cai toc", "cai hoa", "kep hoa"]), ("khan_van", ["khan van", "khan"]),

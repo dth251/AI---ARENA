@@ -25,9 +25,9 @@ class DataCatalogIntegrationTest {
     @Test void fullWardrobesAndEightQuestionsComeFromDatabase() throws Exception {
         mvc.perform(get("/api/data/bootstrap")).andExpect(status().isOk())
             .andExpect(jsonPath("$.wardrobes.male.outfits",hasSize(5)))
-            .andExpect(jsonPath("$.wardrobes.female.outfits",hasSize(6)))
-            .andExpect(jsonPath("$.wardrobes.male.accessories",hasSize(16)))
-            .andExpect(jsonPath("$.wardrobes.female.accessories",hasSize(21)))
+            .andExpect(jsonPath("$.wardrobes.female.outfits",hasSize(5)))
+            .andExpect(jsonPath("$.wardrobes.male.accessories",hasSize(17)))
+            .andExpect(jsonPath("$.wardrobes.female.accessories",hasSize(22)))
             .andExpect(jsonPath("$.wardrobes.male.shoes",hasSize(8)))
             .andExpect(jsonPath("$.wardrobes.female.shoes",hasSize(8)))
             .andExpect(jsonPath("$.quiz",hasSize(8)))
@@ -98,13 +98,33 @@ class DataCatalogIntegrationTest {
                 .anyMatch(item->item.path("id").asText().equals("tai-nghe")));
         }
         // Filtering does not delete the source items or their metadata.
-        assertEquals(86L,jdbc.queryForObject("SELECT COUNT(*) FROM wardrobe_items",Long.class));
+        assertEquals(88L,jdbc.queryForObject("SELECT COUNT(*) FROM wardrobe_items",Long.class));
+    }
+    @Test void sharedGarmentsAndHeadwrapAreAvailableWithOneAoDaiPerCharacter() throws Exception {
+        var mapper=new com.fasterxml.jackson.databind.ObjectMapper();
+        var json=mapper.readTree(mvc.perform(get("/api/data/bootstrap")).andExpect(status().isOk())
+            .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8));
+        for(String character:List.of("male","female")) {
+            var wardrobe=json.path("wardrobes").path(character);
+            var outfits=java.util.stream.StreamSupport.stream(wardrobe.path("outfits").spliterator(),false).toList();
+            for(String id:List.of("nhat-binh","tu-than"))
+                assertTrue(outfits.stream().anyMatch(item->item.path("id").asText().equals(id)),character+"/"+id);
+            assertEquals(1L,outfits.stream().filter(item->item.path("name").asText().equals("Áo dài")).count());
+            assertFalse(outfits.stream().anyMatch(item->List.of("burgundy","teal","rose").contains(item.path("id").asText())));
+            assertTrue(java.util.stream.StreamSupport.stream(wardrobe.path("accessories").spliterator(),false)
+                .anyMatch(item->item.path("id").asText().equals("mu-nhat-binh")&&item.path("gender").asText().equals("unisex")));
+        }
+        assertEquals(3L,jdbc.queryForObject("SELECT COUNT(*) FROM wardrobe_items WHERE selectable=FALSE",Long.class));
+        for(String id:List.of("nhat_binh","ao_tu_than")) {
+            var garment=parseStoredJson(jdbc.queryForObject("SELECT metadata::text FROM ai_catalog_entries WHERE dataset_key='garments' AND entry_key=?",String.class,id));
+            assertTrue(garment.path("genders").toString().contains("nam"));
+        }
     }
     @Test void everyNewCatalogTableHasItsSeedData() {
         for(String table:List.of("data_documents","wardrobe_items","ai_catalog_entries","ai_cultural_rules",
             "quiz_questions","scoring_criteria","checklist_entries"))
             assertTrue(jdbc.queryForObject("SELECT COUNT(*) FROM "+table,Long.class)>0,table);
-        assertEquals(86L,jdbc.queryForObject("SELECT COUNT(*) FROM wardrobe_items",Long.class));
+        assertEquals(88L,jdbc.queryForObject("SELECT COUNT(*) FROM wardrobe_items",Long.class));
         // A fresh migration contains 62 rules; existing user databases can have additional rules.
         assertEquals(62L,jdbc.queryForObject("SELECT COUNT(*) FROM cultural_rules",Long.class));
         assertEquals(0L,jdbc.queryForObject("SELECT COUNT(*) FROM outfit_assets WHERE image_url LIKE '%.svg'",Long.class));

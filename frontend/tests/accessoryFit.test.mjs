@@ -30,7 +30,7 @@ test('headwear brims stay above the eyes and glasses stay centred on the face',(
   assert.ok(wrap.y+wrap.height<glasses.y);
 });
 test('cap and wrap crowns fit the skull even when the source sprite is vertically stretched',()=>{
-  for(const view of ['front','left','right','back'])for(const id of ['mu-luoi-trai','mu-cao-boi','khan-van','khan-xep']){
+  for(const view of ['front','left','right','back'])for(const id of ['mu-luoi-trai','mu-cao-boi','khan-van','mu-nhat-binh','khan-xep']){
     const a=accessoryTarget(item(id),anchors,view,.6),b=accessoryTarget(item(id),anchors,view,2.5);
     assert.deepEqual(a,b,id+'/'+view);
     assert.ok(a.height<=anchors.head.height*.6);

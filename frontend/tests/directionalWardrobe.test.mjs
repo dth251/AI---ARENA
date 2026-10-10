@@ -53,7 +53,7 @@ test('every selectable item has four independent full-canvas RGBA source layers'
       assert.equal(hashes.size,4,`${character}/${item.id} must have four distinct rendered directions`);
     }
   }
-  assert.equal(count,300);
+  assert.equal(count,304);
 });
 
 test('the new male and female bottoms remain selectable through saved selections', async () => {
